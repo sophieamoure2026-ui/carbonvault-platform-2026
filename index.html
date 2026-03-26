@@ -164,9 +164,15 @@
 
     <!-- ======== BROKERS ======== -->
     <div class="panel" id="panel-brokers">
+      <div class="panel-toolbar">
+        <h3>Broker Management</h3>
+        <div class="toolbar-right">
+          <button class="btn-primary" onclick="document.getElementById('broker-modal').style.display='flex'">+ Register New Broker</button>
+        </div>
+      </div>
       <div class="two-col">
         <div class="card">
-          <div class="card-header"><h3>Broker Network</h3><button class="btn-outline" onclick="addBrokerModal()">+ Add Broker</button></div>
+          <div class="card-header"><h3>Active Broker Network</h3></div>
           <div id="carbon-broker-list"></div>
         </div>
         <div>
