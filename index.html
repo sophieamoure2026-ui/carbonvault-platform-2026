@@ -30,6 +30,7 @@
       <a class="nav-item" id="nav-ai" onclick="showPanel('ai')"><span class="nav-icon">◎</span> AI Buyer Finder</a>
       <a class="nav-item" id="nav-pipeline" onclick="showPanel('pipeline')"><span class="nav-icon">▦</span> Sales Pipeline</a>
       <a class="nav-item" id="nav-brokers" onclick="showPanel('brokers')"><span class="nav-icon">◉</span> Brokers</a>
+      <a class="nav-item" id="nav-tools" onclick="showPanel('tools')"><span class="nav-icon">⚒</span> Sales Toolkit</a>
       <a class="nav-item" id="nav-admin" onclick="showPanel('admin')"><span class="nav-icon">⬡</span> Admin & Revenue</a>
     </nav>
     <div class="sidebar-status">
@@ -196,6 +197,36 @@
           <div class="form-group"><label>Region Focus</label><select id="nb-region"><option>EU / EMEA</option><option>North America</option><option>Asia Pacific</option><option>Global</option></select></div>
           <div class="form-group"><label>Fee Rate (%)</label><input type="number" id="nb-rate" placeholder="2.5" step="0.1" /></div>
           <div class="modal-btns"><button class="btn-ghost" onclick="document.getElementById('broker-modal').style.display='none'">Cancel</button><button class="btn-primary" onclick="addCarbonBroker()">Register</button></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ======== SALES TOOLKIT ======== -->
+    <div class="panel" id="panel-tools">
+      <div class="panel-toolbar">
+        <h3>Broker Sales Toolkit</h3>
+        <div class="toolbar-right">
+          <span class="kpi-mini">Ready Assets: <strong class="green">3</strong></span>
+        </div>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(280px, 1fr));gap:24px;margin-top:20px;">
+        <div class="card" style="text-align:center;padding:40px 24px;">
+          <div style="font-size:48px;margin-bottom:20px;">📊</div>
+          <h3 style="color:var(--green);font-family:'Space Grotesk';margin-bottom:12px;">Institutional Pitch Deck</h3>
+          <p style="font-size:13px;color:var(--text-dim);margin:0 auto 24px;line-height:1.6;max-width:85%;">Standard 15-page presentation outlining your verified carbon retirement process to Fortune 500 buyers.</p>
+          <button class="btn-outline" style="width:100%" onclick="window.open('Titan_Carbon_Pitch_Deck.md', '_blank')">↓ Download Deck</button>
+        </div>
+        <div class="card" style="text-align:center;padding:40px 24px;">
+          <div style="font-size:48px;margin-bottom:20px;">📄</div>
+          <h3 style="color:var(--purple);font-family:'Space Grotesk';margin-bottom:12px;">SEC Climate Whitepaper</h3>
+          <p style="font-size:13px;color:var(--text-dim);margin:0 auto 24px;line-height:1.6;max-width:85%;">Compliance framing document proving how your specific credits satisfy upcoming ESG disclosures.</p>
+          <button class="btn-outline" style="width:100%" onclick="window.open('SEC_Climate_Whitepaper.md', '_blank')">↓ Download Paper</button>
+        </div>
+        <div class="card" style="text-align:center;padding:40px 24px;">
+          <div style="font-size:48px;margin-bottom:20px;">✉️</div>
+          <h3 style="color:var(--blue);font-family:'Space Grotesk';margin-bottom:12px;">Targeted Outreach Templates</h3>
+          <p style="font-size:13px;color:var(--text-dim);margin:0 auto 24px;line-height:1.6;max-width:85%;">5 tested, high-conversion cold-email templates for brokers to send directly to Corporate ESG Directors.</p>
+          <button class="btn-outline" style="width:100%" onclick="window.open('Carbon_Outreach_Templates.txt', '_blank')">↓ Download .TXT</button>
         </div>
       </div>
     </div>
