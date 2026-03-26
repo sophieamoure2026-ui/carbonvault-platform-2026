@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CarbonVault — Institutional Carbon Credit Exchange</title>
+  <meta name="description" content="AI-powered global institutional carbon credit marketplace with broker network and revenue share platform." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="bg-grid"></div>
+  <div class="bg-glow bg-glow-1"></div>
+  <div class="bg-glow bg-glow-2"></div>
+
+  <!-- Sidebar -->
+  <aside class="sidebar">
+    <div class="sidebar-logo">
+      <div class="logo-icon">◆</div>
+      <div>
+        <div class="logo-title">CarbonVault</div>
+        <div class="logo-sub">Carbon Credit Exchange</div>
+      </div>
+    </div>
+    <nav class="sidebar-nav">
+      <a class="nav-item active" id="nav-market" onclick="showPanel('market')"><span class="nav-icon">◈</span> Market Ticker</a>
+      <a class="nav-item" id="nav-inventory" onclick="showPanel('inventory')"><span class="nav-icon">◧</span> Inventory</a>
+      <a class="nav-item" id="nav-ai" onclick="showPanel('ai')"><span class="nav-icon">◎</span> AI Buyer Finder</a>
+      <a class="nav-item" id="nav-pipeline" onclick="showPanel('pipeline')"><span class="nav-icon">▦</span> Sales Pipeline</a>
+      <a class="nav-item" id="nav-brokers" onclick="showPanel('brokers')"><span class="nav-icon">◉</span> Brokers</a>
+      <a class="nav-item" id="nav-admin" onclick="showPanel('admin')"><span class="nav-icon">⬡</span> Admin & Revenue</a>
+    </nav>
+    <div class="sidebar-status">
+      <div class="status-dot"></div>
+      <span>Markets Open · Live Prices</span>
+    </div>
+  </aside>
+
+  <main class="main">
+    <header class="topbar">
+      <div class="topbar-left">
+        <h1 class="page-title" id="page-title">Market Ticker</h1>
+        <span class="page-badge" id="page-badge">Live</span>
+      </div>
+      <div class="topbar-right">
+        <div class="price-ticker-mini" id="mini-ticker"></div>
+        <div class="avatar" style="background:linear-gradient(135deg,#00f0ff,#7000ff);box-shadow:0 0 10px rgba(112,0,255,0.5);">DA</div>
+      </div>
+    </header>
+
+    <!-- ======== MARKET TICKER ======== -->
+    <div class="panel active" id="panel-market">
+      <div class="kpi-row">
+        <div class="kpi-card"><div class="kpi-label">Inventory Value</div><div class="kpi-value green">$42.7M</div><div class="kpi-change up">↑ 6% MTD</div></div>
+        <div class="kpi-card"><div class="kpi-label">Carbon Tonnes Held</div><div class="kpi-value">2.38M</div><div class="kpi-change">Verified credits</div></div>
+        <div class="kpi-card"><div class="kpi-label">Active Buyers</div><div class="kpi-value">184</div><div class="kpi-change up">↑ 22 this month</div></div>
+        <div class="kpi-card"><div class="kpi-label">Deals Closed YTD</div><div class="kpi-value green">$8.2M</div><div class="kpi-change up">↑ 3 this quarter</div></div>
+      </div>
+
+      <div class="two-col">
+        <div class="card">
+          <div class="card-header"><h3>Live Carbon Price Feed</h3><span class="badge-pill green-badge">Real-time</span></div>
+          <div id="price-feed"></div>
+        </div>
+        <div class="card">
+          <div class="card-header"><h3>Market Activity</h3><span class="badge-pill">24h Volume</span></div>
+          <div class="activity-chart" id="activity-chart"></div>
+        </div>
+      </div>
+
+      <div class="card mt-4">
+        <div class="card-header"><h3>Top Institutional Demand Signals</h3><button class="btn-ghost" onclick="showPanel('ai')">Run AI Scan →</button></div>
+        <table class="data-table">
+          <thead><tr><th>Institution</th><th>Sector</th><th>Region</th><th>Volume Needed</th><th>AI Score</th><th>Deadline</th></tr></thead>
+          <tbody id="demand-signals-table"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- ======== INVENTORY ======== -->
+    <div class="panel" id="panel-inventory">
+      <div class="panel-toolbar">
+        <h3>Carbon Credit Inventory</h3>
+        <div class="toolbar-right">
+          <span class="kpi-mini">Total: <strong class="green">2.38M tonnes</strong></span>
+          <button class="btn-outline" onclick="document.getElementById('upload-modal').style.display='flex'">⇪ Upload Data</button>
+          <button class="btn-primary" onclick="addCreditModal()">+ Add Credits</button>
+        </div>
+      </div>
+      <div class="card">
+        <table class="data-table" id="inventory-table">
+          <thead><tr><th>Credit Type</th><th>Registry</th><th>Vintage</th><th>Volume (t)</th><th>Price/t</th><th>Total Value</th><th>Status</th><th>Action</th></tr></thead>
+          <tbody id="inventory-tbody"></tbody>
+        </table>
+      </div>
+      <div class="modal-overlay" id="upload-modal" style="display:none">
+        <div class="modal">
+          <h3>Upload Inventory Data</h3>
+          <p style="font-size:12px;color:var(--text-dim);margin-bottom:16px;">Securely import your proprietary credit database (.csv, .xlsx, .json).</p>
+          <div style="border:2px dashed var(--border);border-radius:12px;padding:40px;text-align:center;cursor:pointer;background:rgba(255,255,255,0.02);margin-bottom:20px;" onmouseover="this.style.borderColor='var(--green)';this.style.background='rgba(0,240,255,0.05)'" onmouseout="this.style.borderColor='var(--border)';this.style.background='rgba(255,255,255,0.02)'" onclick="alert('Simulated File Picker Opened')">
+            <div style="font-size:32px;color:var(--green);margin-bottom:12px;">⇪</div>
+            <div style="font-size:14px;font-weight:600;margin-bottom:4px;">Drag & Drop files here</div>
+            <div style="font-size:12px;color:var(--text-dim);">or click to browse from your computer</div>
+          </div>
+          <div class="modal-btns">
+            <button class="btn-ghost" onclick="document.getElementById('upload-modal').style.display='none'">Cancel</button>
+            <button class="btn-primary" onclick="document.getElementById('upload-modal').style.display='none';alert('Data processing initiated. The NeuForge AI is currently mapping your credits to match institutional buyers.')">Import Data</button>
+          </div>
+        </div>
+      </div>
+      <div class="modal-overlay" id="credit-modal" style="display:none">
+        <div class="modal">
+          <h3>Add Carbon Credits</h3>
+          <div class="form-group"><label>Credit Type</label><select id="new-credit-type"><option>REDD+ Forest Conservation</option><option>Cookstove Clean Cooking</option><option>Solar / Wind Power</option><option>Blue Carbon (Mangrove)</option><option>Biochar Sequestration</option></select></div>
+          <div class="form-group"><label>Registry</label><select id="new-credit-reg"><option>VCS (Verified Carbon Standard)</option><option>Gold Standard</option><option>ACR (American Carbon Registry)</option><option>CAR (Climate Action Reserve)</option></select></div>
+          <div class="form-group"><label>Vintage Year</label><input type="number" id="new-credit-vintage" value="2024" min="2018" max="2026" /></div>
+          <div class="form-group"><label>Volume (tonnes)</label><input type="number" id="new-credit-volume" placeholder="50000" /></div>
+          <div class="form-group"><label>Price per tonne ($)</label><input type="number" id="new-credit-price" placeholder="18.50" step="0.50" /></div>
+          <div class="modal-btns"><button class="btn-ghost" onclick="closeCreditModal()">Cancel</button><button class="btn-primary" onclick="addCredit()">Add to Inventory</button></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ======== AI BUYER FINDER ======== -->
+    <div class="panel" id="panel-ai">
+      <div class="two-col-40">
+        <div class="card">
+          <div class="card-header"><h3>AI Global Buyer Scanner</h3><div class="ai-pulse"><span></span>AI</div></div>
+          <div class="form-group"><label>Sector / Industry</label><select id="f-sector"><option value="">All Sectors</option><option>Airlines & Aviation</option><option>Oil & Gas Majors</option><option>Banking & Finance</option><option>Utilities & Energy</option><option>Government / Sovereign</option><option>Manufacturing</option><option>Tech & Data Centers</option></select></div>
+          <div class="form-group"><label>Region</label><select id="f-region"><option value="">Global</option><option>European Union</option><option>North America</option><option>Asia Pacific</option><option>Latin America</option><option>Middle East & Africa</option></select></div>
+          <div class="form-group"><label>Compliance Mandate</label><select id="f-mandate"><option value="">Any</option><option>EU ETS Regulated</option><option>CORSIA (Aviation)</option><option>Voluntary ESG Target</option><option>Net Zero 2030</option><option>Net Zero 2040+</option></select></div>
+          <div class="form-group"><label>Min Volume Needed (tonnes)</label><select id="f-volume"><option value="">Any Volume</option><option>10,000+</option><option>50,000+</option><option>100,000+</option><option>500,000+</option></select></div>
+          <div class="form-group"><label>AI Confidence Threshold</label><input type="range" id="f-conf" min="50" max="99" value="70" oninput="document.getElementById('cv-val').textContent=this.value+'%'" /><span id="cv-val">70%</span></div>
+          <button class="btn-primary full" id="carbon-scan-btn" onclick="runCarbonScan()">◎ Find Institutional Buyers</button>
+        </div>
+        <div>
+          <div class="card">
+            <div class="card-header"><h3>Matched Institutions</h3><span id="carbon-result-count" class="badge-pill">0 matched</span></div>
+            <div id="carbon-results-list">
+              <div class="empty-state"><div class="empty-icon">◆</div><p>Configure filters and run the AI scanner to find institutional carbon credit buyers globally.</p></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ======== PIPELINE ======== -->
+    <div class="panel" id="panel-pipeline">
+      <div class="panel-toolbar"><h3>Sales Pipeline</h3><div class="toolbar-right"><span class="kpi-mini">Total: <strong class="green">$8.2M</strong></span><button class="btn-outline" onclick="addDealModal()">+ Add Deal</button></div></div>
+      <div class="kanban-board" id="carbon-kanban"></div>
+      <div class="modal-overlay" id="deal-modal" style="display:none">
+        <div class="modal">
+          <h3>Add Deal</h3>
+          <div class="form-group"><label>Buyer / Institution</label><input type="text" id="new-deal-buyer" placeholder="e.g. Lufthansa Group" /></div>
+          <div class="form-group"><label>Credit Type</label><select id="new-deal-type"><option>REDD+ Forest Conservation</option><option>Cookstove Clean Cooking</option><option>Solar / Wind Power</option><option>Voluntary Portfolio</option></select></div>
+          <div class="form-group"><label>Volume (tonnes)</label><input type="number" id="new-deal-vol" placeholder="100000" /></div>
+          <div class="form-group"><label>Value ($)</label><input type="number" id="new-deal-val" placeholder="1800000" /></div>
+          <div class="modal-btns"><button class="btn-ghost" onclick="closeDealModal()">Cancel</button><button class="btn-primary" onclick="addCarbonDeal()">Add Deal</button></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ======== BROKERS ======== -->
+    <div class="panel" id="panel-brokers">
+      <div class="two-col">
+        <div class="card">
+          <div class="card-header"><h3>Broker Network</h3><button class="btn-outline" onclick="addBrokerModal()">+ Add Broker</button></div>
+          <div id="carbon-broker-list"></div>
+        </div>
+        <div>
+          <div class="card">
+            <div class="card-header"><h3>Commission Calculator</h3></div>
+            <div class="form-group"><label>Deal Value ($)</label><input type="number" id="cc-deal" placeholder="2500000" oninput="calcCarbonComm()" /></div>
+            <div class="form-group"><label>Platform Fee (%)</label><input type="number" id="cc-platform" placeholder="2.5" step="0.1" oninput="calcCarbonComm()" /></div>
+            <div class="calc-result"><div class="calc-label">Total Commission</div><div class="calc-amount green-text" id="cc-total">—</div></div>
+            <div id="cc-split-result" class="calc-split-row"></div>
+          </div>
+          <div class="card mt-4">
+            <div class="card-header"><h3>Broker Leaderboard</h3></div>
+            <div id="carbon-leaderboard"></div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-overlay" id="broker-modal" style="display:none">
+        <div class="modal">
+          <h3>Register Broker</h3>
+          <div class="form-group"><label>Name</label><input type="text" id="nb-name" placeholder="Jane Smith" /></div>
+          <div class="form-group"><label>Region Focus</label><select id="nb-region"><option>EU / EMEA</option><option>North America</option><option>Asia Pacific</option><option>Global</option></select></div>
+          <div class="form-group"><label>Fee Rate (%)</label><input type="number" id="nb-rate" placeholder="2.5" step="0.1" /></div>
+          <div class="modal-btns"><button class="btn-ghost" onclick="document.getElementById('broker-modal').style.display='none'">Cancel</button><button class="btn-primary" onclick="addCarbonBroker()">Register</button></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ======== ADMIN ======== -->
+    <div class="panel" id="panel-admin">
+      <div class="kpi-row">
+        <div class="kpi-card gold-border"><div class="kpi-label">Titan Platform Revenue</div><div class="kpi-value green">$1.64M</div><div class="kpi-change">20% of all closed deals</div></div>
+        <div class="kpi-card"><div class="kpi-label">David (Operator) Share</div><div class="kpi-value">$4.1M</div><div class="kpi-change">50% rev share</div></div>
+        <div class="kpi-card"><div class="kpi-label">Broker Commissions Paid</div><div class="kpi-value">$2.46M</div><div class="kpi-change">30% commission</div></div>
+        <div class="kpi-card"><div class="kpi-label">Total Volume Sold</div><div class="kpi-value green">487K t</div><div class="kpi-change">Carbon tonnes transacted</div></div>
+      </div>
+      <div id="carbon-equity-tracker" class="mt-2"></div>
+      <div class="card mt-4"><div id="carbon-payments-panel"></div></div>
+    </div>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>
